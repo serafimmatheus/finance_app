@@ -1,3 +1,4 @@
-import userRepository from './user.repository'
+import userRepository from './postgres/user.repository'
+import transactionRepository from './postgres/transaction.repository'
 
-export { userRepository }
+export { userRepository, transactionRepository }
