@@ -1,7 +1,6 @@
 import { compare, hash } from 'bcrypt'
 import { userRepository } from '../repositories'
 import { ErrorHandler } from '../err/errorHandler'
-import { User as UserPrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
@@ -42,7 +41,7 @@ class UserService {
       expiresIn: '1d',
     })
 
-    return token
+    return { token, user: newUserToken }
   }
 
   create = async (user: User) => {

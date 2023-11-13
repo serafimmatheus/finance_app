@@ -1,4 +1,4 @@
-import { Response } from 'express'
+// import { Response } from 'express'
 
 class ErrorHandler extends Error {
   statusCode: number
@@ -11,17 +11,17 @@ class ErrorHandler extends Error {
   }
 }
 
-const errorHandler = (err: Error, res: Response) => {
-  if (err instanceof ErrorHandler) {
-    return res.status(err.statusCode).json({
-      message: err.message,
-      statusCode: err.statusCode,
-    })
-  }
+// const errorHandler = (err: Error, res: Response) => {
+//   if (err instanceof ErrorHandler) {
+//     return res.status(err.statusCode).json({
+//       message: err.message,
+//       statusCode: err.statusCode,
+//     })
+//   }
 
-  return res.status(500).json({
-    message: 'Internal Server Error',
-  })
-}
+//   return res.status(500).json({
+//     message: 'Internal Server Error',
+//   })
+// }
 
-export { ErrorHandler, errorHandler }
+export { ErrorHandler }

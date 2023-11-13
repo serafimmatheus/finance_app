@@ -1,13 +1,29 @@
-import { Transaction } from '@prisma/client'
+import { $Enums } from '@prisma/client'
 import { prisma } from '../../lib/prisma'
+
+interface Transaction {
+  name: string
+  amount: number
+  date: Date
+  userId: string
+  type: $Enums.TransactionType
+}
+
+interface ITransactionUpdated {
+  name?: string
+  amoun?: number
+  date?: Date
+  type?: $Enums.TransactionType
+}
 
 interface ITransactionRepository {
   createTransaction: (transaction: Transaction) => Promise<Transaction>
   getTransaction: (id: string) => Promise<Transaction[] | null>
+  getTransactionsById: (id: string) => Promise<Transaction>
   updateTransaction: (
     id: string,
-    transaction: Transaction
-  ) => Promise<Transaction>
+    transaction: ITransactionUpdated
+  ) => Promise<ITransactionUpdated>
   deleteTransaction: (id: string) => Promise<Transaction>
 }
 
@@ -23,14 +39,28 @@ class TransactionRepository implements ITransactionRepository {
   getTransaction = async (id: string) => {
     const transaction = await prisma.transaction.findMany({
       where: {
-        id,
+        userId: id,
+      },
+
+      orderBy: {
+        date: 'desc',
       },
     })
 
     return transaction
   }
 
-  updateTransaction = async (id: string, transaction: Transaction) => {
+  getTransactionsById = async (id: string) => {
+    const transactions = await prisma.transaction.findFirstOrThrow({
+      where: {
+        id,
+      },
+    })
+
+    return transactions
+  }
+
+  updateTransaction = async (id: string, transaction: ITransactionUpdated) => {
     const transactionUpdate = await prisma.transaction.update({
       where: {
         id,

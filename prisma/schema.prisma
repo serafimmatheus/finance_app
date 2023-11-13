@@ -11,9 +11,9 @@ datasource db {
 }
 
 enum TransactionType {
-  ADMIN
-  USER
-  MODERATOR
+  perdas
+  ganhos
+  investimentos
 }
 
 model User {

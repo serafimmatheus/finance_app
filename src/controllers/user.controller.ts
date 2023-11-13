@@ -36,7 +36,7 @@ class UserController {
     }
   }
 
-  getAllUsers = async (_: Request, res: Response) => {
+  getAllUsers = async (req: Request, res: Response) => {
     const users = await userRepository.listAll()
 
     const usersWithoutPassword = users.map((user) => {
