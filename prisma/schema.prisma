@@ -16,6 +16,11 @@ enum TransactionType {
   investimentos
 }
 
+enum ShoppingType {
+  un
+  kg
+}
+
 model User {
   id           String        @id @default(cuid())
   email        String        @unique
@@ -23,6 +28,7 @@ model User {
   lastName     String
   password     String
   transactions Transaction[]
+  shopping     Shopping[]
 
   @@map("users")
 }
@@ -38,4 +44,17 @@ model Transaction {
   createdAt DateTime        @default(now())
 
   @@map("transactions")
+}
+
+model Shopping {
+  id        String       @id @default(cuid())
+  userId    String
+  name      String
+  createdAt DateTime     @default(now())
+  amount    Float
+  type      ShoppingType
+  quantity  Float
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("shoppings")
 }
