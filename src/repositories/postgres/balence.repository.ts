@@ -14,8 +14,8 @@ class BalencesRepository implements IBalencesRepository {
             SUM(CASE WHEN "type" = 'investimentos' THEN "amount" ELSE 0 END) as "investments",
 
             SUM(CASE WHEN "type" = 'ganhos' THEN "amount" ELSE 0 END)
-            - (SUM(CASE WHEN "type" = 'perdas' THEN "amount" ELSE 0 END)
-            - SUM(CASE WHEN "type" = 'investimentos' THEN "amount" ELSE 0 END)) as "balence"
+            - SUM(CASE WHEN "type" = 'investimentos' THEN "amount" ELSE 0 END)
+            - (SUM(CASE WHEN "type" = 'perdas' THEN "amount" ELSE 0 END)) as "balence"
         FROM "transactions"
         WHERE "userId" = ${userId}
         AND TO_CHAR("date", 'YYYY-MM') = ${date};
